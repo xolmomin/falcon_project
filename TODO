@@ -1,0 +1,15 @@
+
+
+
+Task
+1. image larni webp formatda saqlash
+2. productni image max 8ta bolishi (modelda tekshirish)
+3. product description, short_description ga ckeditor qoshish kk
+4. product ochganda, unga tegishli bolgan rasmlarni media dan ham ochirishi kerak
+5. admin login page da 'Falcon Admin' deb yozilgan va logo bilan chiqsin
+6. django jazzmin o'rnatilsin
+7. eng oxirgi qoshilgani birinchida turishi kerak (oxirgi 3kun ichida qoshilgan product larni 'New' yorlig'ini qoyish)
+
+
+10. en, uz tilli bolishi
+
