@@ -1,6 +1,9 @@
+from datetime import timedelta
+
 from django.db.models import Model, CharField, PositiveSmallIntegerField, PositiveIntegerField, \
     TextField, ForeignKey, CASCADE, Q, ManyToManyField, ImageField
 from django.db.models.constraints import CheckConstraint
+from django.utils.timezone import now
 from django_jsonform.models.fields import JSONField
 
 from apps.models.base import SlugBaseModel, CreatedBaseModel
@@ -59,6 +62,14 @@ class Product(SlugBaseModel, CreatedBaseModel):
 
     def __str__(self):
         return self.name
+
+    @property
+    def discount_price(self):
+        return self.price - int(self.discount_percentage * self.price / 100)
+
+    @property
+    def is_new(self):
+        return self.created_at > now() - timedelta(days=3)
 
 
 class ProductImage(Model):
