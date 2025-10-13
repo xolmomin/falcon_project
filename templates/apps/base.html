@@ -75,7 +75,8 @@
                             </div>
                         </a>
                             <ul class="nav collapse" id="home" data-parent="#navbarVerticalCollapse">
-                                <li class="nav-item"><a class="nav-link" href="{% url 'product_list_page' %}">Dashboard</a>
+                                <li class="nav-item"><a class="nav-link"
+                                                        href="{% url 'product_list_page' %}">Dashboard</a>
                                 </li>
                                 <li class="nav-item"><a class="nav-link" href="../home/dashboard-alt.html">Dashboard
                                     alt</a>
@@ -193,8 +194,8 @@
                                         <li class="nav-item"><a class="nav-link"
                                                                 href="../authentication/basic/login.html">Login</a>
                                         </li>
-                                        <li class="nav-item"><a class="nav-link"
-                                                                href="../authentication/basic/logout.html">Logout</a>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{% url 'logout_page' %}">Logout</a>
                                         </li>
                                         <li class="nav-item"><a class="nav-link"
                                                                 href="../authentication/basic/register.html">Register</a>
@@ -224,8 +225,8 @@
                                         <li class="nav-item"><a class="nav-link"
                                                                 href="../authentication/card/login.html">Login</a>
                                         </li>
-                                        <li class="nav-item"><a class="nav-link"
-                                                                href="../authentication/card/logout.html">Logout</a>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{% url 'logout_page' %}">Logout</a>
                                         </li>
                                         <li class="nav-item"><a class="nav-link"
                                                                 href="../authentication/card/register.html">Register</a>
@@ -904,7 +905,7 @@
 
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="../pages/settings.html">Settings</a>
-                                    <a class="dropdown-item" href="../authentication/basic/logout.html">Logout</a>
+                                    <a class="dropdown-item" href="{% url 'logout_page' %}">Logout</a>
                                 {% else %}
                                     <a class="dropdown-item" href="{% url 'login_page' %}">Login</a>
                                     <a class="dropdown-item" href="{% url 'register_page' %}">Register</a>
@@ -984,7 +985,8 @@
                             </div>
                             <div class="custom-control custom-switch">
                                 <input class="custom-control-input" id="mode-rtl" type="checkbox"
-                                       data-home-url="{% url 'product_list_page' %}" data-url="../documentation/RTL.html"/>
+                                       data-home-url="{% url 'product_list_page' %}"
+                                       data-url="../documentation/RTL.html"/>
                                 <label class="custom-control-label" for="mode-rtl"> </label>
                             </div>
                         </div>
@@ -1000,7 +1002,8 @@
                             </div>
                             <div class="custom-control custom-switch">
                                 <input class="custom-control-input" id="mode-fluid" type="checkbox"
-                                       data-home-url="{% url 'product_list_page' %}" data-url="../documentation/fluid-layout.html"/>
+                                       data-home-url="{% url 'product_list_page' %}"
+                                       data-url="../documentation/fluid-layout.html"/>
                                 <label class="custom-control-label" for="mode-fluid"> </label>
                             </div>
                         </div>
@@ -1040,7 +1043,8 @@
                                             alt=""/></label>
                                     <label class="cursor-pointer d-flex mb-0 pl-3 ml-2" for="navbar-style-transparent">
                                         <input class="custom-control-input" id="navbar-style-transparent" type="radio"
-                                               name="navbarVertical" checked="checked" data-page-url="{% url 'product_list_page' %}"
+                                               name="navbarVertical" checked="checked"
+                                               data-page-url="{% url 'product_list_page' %}"
                                                value="transparent"/><span
                                             class="custom-control-label"> Transparent</span>
                                     </label>

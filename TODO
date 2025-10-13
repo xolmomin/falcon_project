@@ -2,15 +2,36 @@
 
 
 Task
-1. image larni webp formatda saqlash
+
+0. faker (faker, factoryboy) +
+0. image ni auto resize +
+1. image larni webp formatda saqlash +
 2. productni image max 8ta bolishi (modelda tekshirish)
-3. product description, short_description ga ckeditor qoshish kk
-4. product ochganda, unga tegishli bolgan rasmlarni media dan ham ochirishi kerak
-5. admin login page da 'Falcon Admin' deb yozilgan va logo bilan chiqsin
-6. django jazzmin o'rnatilsin
+3. product description, short_description ga ckeditor qoshish kk +
+4. product ochganda, unga tegishli bolgan rasmlarni media dan ham ochirishi kerak +
+5. admin login page da 'Falcon Admin' deb yozilgan va logo bilan chiqsin +
+6. django jazzmin o'rnatilsin +
 7. eng oxirgi qoshilgani birinchida turishi kerak (oxirgi 3kun ichida qoshilgan product larni 'New' yorlig'ini qoyish)
+8. minio, aws s3
+9. register, login +
+10. en, uz, oz, kr tilli bolishi +
+11. frontda lang change qilish
+12. django faker command +
+13. loginda email|username boyicha login qilish
+
+14. register.html da form ni ozini ishlatish
+15. register qilganda pochtaga xabar yuborish (tasdiqlash uchun 1martalik link yuborilsin)
 
 
-10. en, uz tilli bolishi
 
-login, register
+Homework
+1. uz (Latin), oz (Kiril), ru
+2. frontda lang change qilish
+3. login, register
+
+
+
+python3 manage.py runserver
+python3 manage.py makemigrations
+python3 manage.py migrate
+
