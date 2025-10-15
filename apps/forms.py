@@ -2,9 +2,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UsernameField
 from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError
-from django.forms import ModelForm
-from django.forms.fields import CharField
-from django.forms.forms import Form
+from django.forms import Form, CharField, ModelForm, EmailField, BooleanField
 
 from apps.models import User
 
@@ -26,10 +24,19 @@ class LoginForm(Form):
 
 class RegisterModelForm(ModelForm):
     confirm_password = CharField(max_length=255, required=True)
+    email = EmailField(required=True)
 
     class Meta:
         model = User
         fields = 'first_name', 'username', 'email', 'password'
+
+    def clean_first_name(self):
+        first_name = self.cleaned_data.get('first_name')
+        return first_name.title()
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        return username.lower()
 
     def clean(self):
         cleaned_data = super().clean()
@@ -46,4 +53,5 @@ class RegisterModelForm(ModelForm):
             raise ValidationError("Passwords don't match")
 
         cleaned_data['password'] = make_password(cleaned_data['password'])
+        cleaned_data['username'] = cleaned_data['username'].lower()
         return cleaned_data

@@ -29,9 +29,20 @@ Homework
 2. frontda lang change qilish
 3. login, register
 
+./manage.py sendtestemail sarsenovmanas186@gmail.com
+port = 465
+smtp_server = "smtp.gmail.com"
+sender_email = "abbossetdarov3@gmail.com"
+receiver_email = "abbossetdarov3@gmail.com"
+password = "dyqrwsqjnuelabcn"
+message = """\
+From: Abbos
+To: ME
 
 
-python3 manage.py runserver
-python3 manage.py makemigrations
-python3 manage.py migrate
+Error
+1. form da register qilishda
+django.db.utils.IntegrityError: duplicate key value violates unique constraint "apps_user_username_key"
+DETAIL:  Key (username)=(manas_sarsen) already exists.
+
 
