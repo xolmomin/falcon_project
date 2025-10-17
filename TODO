@@ -20,29 +20,24 @@ Task
 13. loginda email|username boyicha login qilish
 
 14. register.html da form ni ozini ishlatish
-15. register qilganda pochtaga xabar yuborish (tasdiqlash uchun 1martalik link yuborilsin)
+15. register qilganda pochtaga xabar yuborish (tasdiqlash uchun 1martalik link yuborilsin) +
+16. cart bilan ishlash, shopping-cart.html ni togrilash
+17. order modelini yozish (order da faqat 1ta product bo'ladi)
+18. register da password kamida 8ta belgi bolishi kerak
 
 
 
-Homework
-1. uz (Latin), oz (Kiril), ru
-2. frontda lang change qilish
-3. login, register
 
 ./manage.py sendtestemail sarsenovmanas186@gmail.com
-port = 465
-smtp_server = "smtp.gmail.com"
-sender_email = "abbossetdarov3@gmail.com"
-receiver_email = "abbossetdarov3@gmail.com"
-password = "dyqrwsqjnuelabcn"
-message = """\
-From: Abbos
-To: ME
 
+(base)product-grid
+(base)product-detail
+
+(main_base)login
+(main_base)register
+(main_base)base
 
 Error
 1. form da register qilishda
 django.db.utils.IntegrityError: duplicate key value violates unique constraint "apps_user_username_key"
 DETAIL:  Key (username)=(manas_sarsen) already exists.
-
-

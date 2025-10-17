@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_decode
 from django.views import View
-from django.views.generic import ListView, DetailView, FormView, CreateView
+from django.views.generic import ListView, DetailView, FormView, CreateView, TemplateView
 
 from apps.forms import LoginForm, RegisterModelForm
 from apps.mixins import LoginNotRequiredMixin
@@ -44,6 +44,10 @@ class ProductDetailView(DetailView):
     queryset = Product.objects.all()
     template_name = 'apps/products/product-details.html'
     context_object_name = 'product'
+
+
+class ShoppingCartTemplateView(TemplateView):
+    template_name = 'apps/products/shopping-cart.html'
 
 
 class CustomLogoutView(View):
