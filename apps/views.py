@@ -1,15 +1,16 @@
 from django.contrib import messages
 from django.contrib.auth import login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_decode
 from django.views import View
-from django.views.generic import ListView, DetailView, FormView, CreateView, TemplateView
+from django.views.generic import ListView, DetailView, FormView, CreateView
 
 from apps.forms import LoginForm, RegisterModelForm
 from apps.mixins import LoginNotRequiredMixin
-from apps.models import Product, User
+from apps.models import Product, User, CartItem
 from apps.tokens import account_activation_token
 from apps.utils import send_registration_link
 
@@ -37,7 +38,7 @@ class ProductListView(ListView):
     queryset = Product.objects.all()
     template_name = 'apps/products/product-grid.html'
     context_object_name = 'products'
-    paginate_by = 1
+    paginate_by = 2
 
 
 class ProductDetailView(DetailView):
@@ -46,8 +47,10 @@ class ProductDetailView(DetailView):
     context_object_name = 'product'
 
 
-class ShoppingCartTemplateView(TemplateView):
+class ShoppingCartListView(LoginRequiredMixin, ListView):
+    queryset = CartItem.objects.all()
     template_name = 'apps/products/shopping-cart.html'
+    context_object_name = 'cart_items'
 
 
 class CustomLogoutView(View):

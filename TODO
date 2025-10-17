@@ -27,7 +27,6 @@ Task
 
 
 
-
 ./manage.py sendtestemail sarsenovmanas186@gmail.com
 
 (base)product-grid

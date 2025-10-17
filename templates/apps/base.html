@@ -202,14 +202,15 @@
                 </li>
             </ul>
             <ul class="navbar-nav navbar-nav-icons ml-auto flex-row align-items-center">
-                <li class="nav-item">
-                    <a class="nav-link px-0 notification-indicator notification-indicator-warning notification-indicator-fill icon-indicator"
-                       href="../e-commerce/shopping-cart.html">
-                        <span class="fas fa-shopping-cart fs-4" data-fa-transform="shrink-7"></span>
-                        <span class="notification-indicator-number">1</span>
-                    </a>
-
-                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link px-0 notification-indicator notification-indicator-warning notification-indicator-fill icon-indicator"
+                           href="{% url 'shopping_cart_page' %}">
+                            <span class="fas fa-shopping-cart fs-4" data-fa-transform="shrink-7"></span>
+                            <span class="notification-indicator-number">{{ user.cart_count }}</span>
+                        </a>
+                    </li>
+                {% endif %}
                 <li class="nav-item dropdown dropdown-on-hover">
                     <a class="nav-link notification-indicator notification-indicator-primary px-0 icon-indicator"
                        id="navbarDropdownNotification" href="#" role="button" data-toggle="dropdown"

@@ -1,6 +1,7 @@
 {% extends 'apps/base.html' %}
 {% load i18n %}
 {% load static %}
+{% load custom_tags %}
 
 {% block title %}
     Product detail
@@ -50,14 +51,12 @@
                             class="ml-1 text-600">(8)</span></a>
                     <p class="fs--1">{{ product.short_description|safe }}</p>
                     <h4 class="d-flex align-items-center">
-                        <span class="text-warning mr-2">${{ product.discount_price }}</span>
+                        <span class="text-warning mr-2">${{ product.discount_price|int_space }}</span>
                         {% if product.discount_percentage %}
                             <span class="mr-1 fs--1 text-500">
-                                <del class="mr-1">${{ product.price }}</del>
+                                <del class="mr-1">${{ product.price|int_space }}</del>
                                 <strong>-{{ product.discount_percentage }}%</strong>
                             </span>
-                        {% else %}
-
                         {% endif %}
 
                     </h4>

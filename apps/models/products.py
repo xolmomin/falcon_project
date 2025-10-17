@@ -3,13 +3,14 @@ from datetime import timedelta
 
 from PIL import ImageOps, Image
 from django.db.models import Model, CharField, PositiveSmallIntegerField, PositiveIntegerField, \
-    ForeignKey, CASCADE, Q, ManyToManyField, ImageField
+    ForeignKey, CASCADE, Q, ManyToManyField, ImageField, OneToOneRel, OneToOneField
 from django.db.models.constraints import CheckConstraint
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 from django_ckeditor_5.fields import CKEditor5Field
 from django_jsonform.models.fields import JSONField
 
+from apps.models import users
 from apps.models.base import SlugBaseModel, CreatedBaseModel
 
 
@@ -72,6 +73,10 @@ class Product(SlugBaseModel, CreatedBaseModel):
         return self.name
 
     @property
+    def first_image(self):
+        return self.images.first()
+
+    @property
     def discount_price(self):
         return self.price - int(self.discount_percentage * self.price / 100)
 
@@ -113,3 +118,13 @@ class ProductImage(Model):
     def delete(self, using=None, keep_parents=False):
         self.image.delete(False)
         return super().delete(using, keep_parents)
+
+
+class Cart(Model):
+    user = OneToOneField('apps.User', CASCADE)
+
+
+class CartItem(Model):
+    cart = ForeignKey('apps.Cart', CASCADE, related_name='items')
+    product = ForeignKey('apps.Product', CASCADE, related_name='items')
+    quantity = PositiveIntegerField(verbose_name=_('Quantity'))
