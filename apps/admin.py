@@ -48,7 +48,7 @@ class ProductModelAdmin(admin.ModelAdmin):
     list_display = ['name', 'price']
     inlines = [ProductImageStackedInline]
     filter_horizontal = ['tags']
-
+    search_fields = ['name']
 
 @admin.register(User)
 class UserModelAdmin(UserAdmin):

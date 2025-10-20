@@ -1,16 +1,18 @@
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q, Sum, F, Prefetch
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_decode
 from django.views import View
-from django.views.generic import ListView, DetailView, FormView, CreateView
+from django.views.generic import ListView, DetailView, FormView, CreateView, TemplateView
+from urllib3.util import parse_url
 
 from apps.forms import LoginForm, RegisterModelForm
 from apps.mixins import LoginNotRequiredMixin
-from apps.models import Product, User, CartItem
+from apps.models import Product, User, CartItem, ProductImage
 from apps.tokens import account_activation_token
 from apps.utils import send_registration_link
 
@@ -35,10 +37,21 @@ class ActivateAccountView(View):
 
 
 class ProductListView(ListView):
-    queryset = Product.objects.all()
+    queryset = Product.objects.select_related('category').prefetch_related('images')  # join
     template_name = 'apps/products/product-grid.html'
     context_object_name = 'products'
-    paginate_by = 2
+    paginate_by = 10
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        search = self.request.GET.get('search')
+        if search:
+            qs = qs.filter(
+                Q(name__icontains=search) |
+                Q(short_description__icontains=search) |
+                Q(description__icontains=search)
+            )
+        return qs
 
 
 class ProductDetailView(DetailView):
@@ -47,10 +60,29 @@ class ProductDetailView(DetailView):
     context_object_name = 'product'
 
 
+class CheckoutTemplateView(TemplateView):
+    template_name = 'apps/products/checkout.html'
+
+
 class ShoppingCartListView(LoginRequiredMixin, ListView):
-    queryset = CartItem.objects.all()
+    queryset = CartItem.objects.select_related('product').prefetch_related(
+        Prefetch('product__images', queryset=ProductImage.objects.all()))
     template_name = 'apps/products/shopping-cart.html'
     context_object_name = 'cart_items'
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.filter(cart__user=self.request.user)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(object_list=object_list, **kwargs)
+        qs = self.get_queryset()
+        context['total_price'] = qs.aggregate(
+            total_sum=Sum(
+                F('quantity') * (F('product__price') - F('product__discount_percentage') * F('product__price') / 100)
+            )
+        )['total_sum']
+        return context
 
 
 class CustomLogoutView(View):
@@ -84,3 +116,15 @@ class RegisterCreateView(LoginNotRequiredMixin, CreateView):
         send_registration_link(user, f"http://{self.request.get_host()}")
         messages.success(self.request, "Ro'yxatdan muvaffaqiyatli o'tdingiz! Pochtangizni tekshiring.")
         return redirect(self.success_url)
+
+# n + 1 problem
+
+# select * from products; 10ta product
+# select * from category where id=1; 10ta product
+# select * from category where id=1; 10ta product
+# select * from category where id=1; 10ta product
+# select * from category where id=1; 10ta product
+# select * from category where id=1; 10ta product
+# select * from category where id=1; 10ta product
+# select * from category where id=1; 10ta product
+# select * from category where id=1; 10ta product

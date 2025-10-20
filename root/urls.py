@@ -1,3 +1,4 @@
+from debug_toolbar.toolbar import debug_toolbar_urls
 from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib import admin
@@ -20,6 +21,6 @@ urlpatterns = i18n_patterns(
     path("ckeditor5/", include('django_ckeditor_5.urls')),
     path('rosetta/', include('rosetta.urls'))
 
-) + static(MEDIA_URL, document_root=MEDIA_ROOT)
+) + static(MEDIA_URL, document_root=MEDIA_ROOT) + debug_toolbar_urls()
 
 handler404 = 'root.urls.handler404_view'

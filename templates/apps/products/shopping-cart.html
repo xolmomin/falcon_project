@@ -1,5 +1,6 @@
 {% extends 'apps/base.html' %}
 {% load static %}
+{% load custom_tags %}
 
 {% block title %}
     Shopping Cart
@@ -29,7 +30,7 @@
                         </svg>
                     </span>Continue
                         Shopping</a><a
-                        class="btn btn-sm btn-primary" href="../e-commerce/checkout.html">Checkout</a></div>
+                        class="btn btn-sm btn-primary" href="{% url 'checkout_page' %}">Checkout</a></div>
             </div>
         </div>
         <div class="card-body p-0">
@@ -73,7 +74,7 @@
                                             </button>
                                         </div>
                                         <input class="form-control text-center px-2 input-quantity input-spin-none"
-                                               type="number" min="1" value="1"
+                                               type="number" min="1" value="{{ cart_item.quantity }}"
                                                aria-label="Amount (to the nearest dollar)"
                                                style="max-width: 40px">
                                         <div class="input-group-append">
@@ -85,7 +86,7 @@
                                 </div>
                             </div>
                             <div class="col-md-4 text-right pl-0 pr-2 pr-md-3 order-0 order-md-1 mb-2 mb-md-0 text-600">
-                                $400
+                                ${{ cart_item.product.price|int_space }}
                             </div>
                         </div>
                     </div>
@@ -96,8 +97,8 @@
                 <div class="col-9 col-md-8 py-2 py-0 px-md-3 text-right text-900">Total</div>
                 <div class="col px-3">
                     <div class="row no-gutters">
-                        <div class="col-md-8 py-2 d-none d-md-block text-center">7 (items)</div>
-                        <div class="col-12 col-md-4 text-right py-2 pr-md-3 pl-0">$8516</div>
+                        <div class="col-md-8 py-2 d-none d-md-block text-center">{{ user.cart_count }} (items)</div>
+                        <div class="col-12 col-md-4 text-right py-2 pr-md-3 pl-0">${{ total_price }}</div>
                     </div>
                 </div>
             </div>
@@ -111,7 +112,7 @@
                     </div>
                 </div>
             </form>
-            <a class="btn btn-sm btn-primary" href="../e-commerce/checkout.html">Checkout</a>
+            <a class="btn btn-sm btn-primary" href="{% url 'checkout_page' %}">Checkout</a>
         </div>
     </div>
 {% endblock %}

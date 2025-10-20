@@ -25,18 +25,23 @@ Task
 17. order modelini yozish (order da faqat 1ta product bo'ladi)
 18. register da password kamida 8ta belgi bolishi kerak
 
+19. cart ga qoshish va ochirish
+20. product list page dagi, search
+
+
+
+21. forgot password ni ishlatish
+22. notificaiton ishlaydigan qilish
 
 
 ./manage.py sendtestemail sarsenovmanas186@gmail.com
 
-(base)product-grid
-(base)product-detail
-
-(main_base)login
-(main_base)register
-(main_base)base
 
 Error
 1. form da register qilishda
 django.db.utils.IntegrityError: duplicate key value violates unique constraint "apps_user_username_key"
 DETAIL:  Key (username)=(manas_sarsen) already exists.
+
+2. uzumdagi vector boyicha search
+
+
