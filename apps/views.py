@@ -7,12 +7,11 @@ from django.urls import reverse_lazy
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_decode
 from django.views import View
-from django.views.generic import ListView, DetailView, FormView, CreateView, TemplateView
-from urllib3.util import parse_url
+from django.views.generic import ListView, DetailView, FormView, CreateView
 
 from apps.forms import LoginForm, RegisterModelForm
 from apps.mixins import LoginNotRequiredMixin
-from apps.models import Product, User, CartItem, ProductImage
+from apps.models import Product, User, CartItem, ProductImage, Order
 from apps.tokens import account_activation_token
 from apps.utils import send_registration_link
 
@@ -60,8 +59,33 @@ class ProductDetailView(DetailView):
     context_object_name = 'product'
 
 
-class CheckoutTemplateView(TemplateView):
+class OrderListView(ListView):
+    queryset = Order.objects.all()
+    template_name = 'apps/products/orders.html'
+    context_object_name = 'orders'
+
+
+class CheckoutListView(LoginRequiredMixin, ListView):
+    queryset = CartItem.objects.all()
     template_name = 'apps/products/checkout.html'
+    context_object_name = 'cart_items'
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.filter(cart__user=self.request.user).annotate(
+            price=F('product__price') - F('product__discount_percentage') * F('product__price') / 100
+        )
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        qs = self.get_queryset()
+        context['shipping_cost'] = qs.aggregate(Sum('product__price'))['product__price__sum']
+        context['subtotal_cost'] = qs.aggregate(
+            total_sum=Sum(
+                F('quantity') * (F('product__price') - F('product__discount_percentage') * F('product__price') / 100)
+            )
+        )['total_sum']
+        return context
 
 
 class ShoppingCartListView(LoginRequiredMixin, ListView):

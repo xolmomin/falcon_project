@@ -15,5 +15,9 @@ class User(AbstractUser):
     def cart_count(self):
         if hasattr(self, 'cart'):
             # return self.cart.items.count()
-            return sum(self.cart.items.values_list('quantity', flat=True))
+            return sum(self.cart.cart_items.values_list('quantity', flat=True))
         return 0
+
+    @property
+    def is_admin(self):
+        return self.type == User.Type.ADMIN or self.is_superuser

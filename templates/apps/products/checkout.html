@@ -22,105 +22,42 @@
                 <div class="card-body">
                     <table class="table table-borderless fs--1 mb-0">
                         <tbody>
-                        <tr class="border-bottom">
-                            <th class="pl-0 pt-0">Apple MacBook Pro 15" x 1
-                                <div class="text-400 font-weight-normal fs--2">Z0V20008N: 2.9GHz 6-core 8th-Gen Intel
-                                    Core i9, 32GB RAM
-                                </div>
-                            </th>
-                            <th class="pr-0 text-right pt-0">$1345</th>
-                        </tr>
-                        <tr class="border-bottom">
-                            <th class="pl-0">Apple iMac Pro x 1
-                                <div class="text-400 font-weight-normal fs--2">27-inch with Retina 5K Display, 3.0GHz
-                                    10-core Intel Xeon W, 1TB
-                                </div>
-                            </th>
-                            <th class="pr-0 text-right">$2010</th>
-                        </tr>
+                        {% for cart_item in cart_items %}
+                            <tr class="border-bottom">
+                                <th class="pl-0 pt-0">
+                                    {{ cart_item.product.name }}
+                                    <div class="text-400 font-weight-normal fs--2">
+                                        {{ cart_item.product.short_description|safe }}
+                                    </div>
+                                </th>
+                                <th class="pr-0 text-right pt-0">
+                                  {{ cart_item.quantity }} x ${{ cart_item.price }}
+                                </th>
+                            </tr>
+                        {% endfor %}
                         <tr class="border-bottom">
                             <th class="pl-0">Subtotal</th>
-                            <th class="pr-0 text-right">$3355</th>
-                        </tr>
-                        <tr class="border-bottom">
-                            <th class="pl-0">Coupon: <span class="text-success">40SITEWIDE</span></th>
-                            <th class="pr-0 text-right">-$55</th>
+                            <th class="pr-0 text-right">${{ subtotal_cost }}</th>
                         </tr>
                         <tr class="border-bottom">
                             <th class="pl-0">Shipping</th>
-                            <th class="pr-0 text-right">$20</th>
-                        </tr>
-                        <tr>
-                            <th class="pl-0 pb-0">Total</th>
-                            <th class="pr-0 text-right pb-0">$3320</th>
+                            <th class="pr-0 text-right">${{ shipping_cost }}</th>
                         </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="card-footer d-flex justify-content-between bg-100">
                     <div class="font-weight-semi-bold">Payable Total</div>
-                    <div class="font-weight-bold">$3320</div>
+                    <div class="font-weight-bold">${{ subtotal_cost|add:shipping_cost }}</div>
                 </div>
             </div>
         </div>
         <div class="col-xl-8 pr-xl-2">
-            <div class="card mb-3">
-                <div class="card-header bg-light">
-                    <div class="row justify-content-between align-items-center">
-                        <div class="col-sm-auto">
-                            <h5 class="mb-2 mb-sm-0">Your Shipping Address</h5>
-                        </div>
-                        <div class="col-sm-auto"><a class="btn btn-falcon-default btn-sm" href="#!"><span class="mr-2"
-                                                                                                          data-fa-transform="shrink-2"
-                                                                                                          data-fa-i2svg=""><svg
-                                class="svg-inline--fa fa-plus fa-w-14" data-fa-transform="shrink-2" aria-hidden="true"
-                                focusable="false" data-prefix="fas" data-icon="plus" role="img"
-                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><g
-                                transform="translate(224 256)"><g
-                                transform="translate(0, 0)  scale(0.875, 0.875)  rotate(0 0 0)"><path
-                                fill="currentColor"
-                                d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
-                                transform="translate(-224 -256)"></path></g></g></svg></span>Add New Address</a></div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6 mb-3 mb-md-0">
-                            <div class="custom-control custom-radio radio-select">
-                                <input class="custom-control-input" id="address-1" type="radio" name="clientName"
-                                       checked="">
-                                <label class="custom-control-label font-weight-bold d-block" for="address-1">Antony
-                                    Hopkins<span class="radio-select-content"><span> 2392 Main Avenue,<br>Pensaukee,<br>New Jersey 02139<span
-                                            class="d-block mb-0 pt-2">+(856) 929-229</span></span></span></label><a
-                                    class="mt-2 fs--1" href="#!">Edit</a>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="position-relative">
-                                <div class="custom-control custom-radio radio-select">
-                                    <input class="custom-control-input" id="address-2" type="radio" name="clientName">
-                                    <label class="custom-control-label font-weight-bold d-block" for="address-2">Robert
-                                        Bruce<span class="radio-select-content"><span>3448 Ile De France St #242,<br>Fort Wainwright, <br>Alaska, 99703<span
-                                                class="d-block mb-0 pt-2">+(901) 637-734</span></span></span></label><a
-                                        class="mt-2 fs--1" href="#!">Edit</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="card">
                 <div class="card-header bg-light">
                     <h5 class="mb-0">Payment Method</h5>
                 </div>
                 <div class="card-body">
-                    <div class="custom-control custom-radio">
-                        <input class="custom-control-input radio-collapse" type="radio" name="payment-method"
-                               id="credit-card" checked="checked">
-                        <label class="custom-control-label" for="credit-card"><span
-                                class="d-flex align-items-center mb-2 fs-1">Credit Card</span>
-                        </label>
-                    </div>
                     <div class="row">
                         <div class="col-sm-8 pl-5 ml-n2">
                             <div class="form-group">
@@ -132,7 +69,8 @@
                                     <div class="form-group">
                                         <label class="ls text-uppercase text-600 font-weight-semi-bold mb-0">Exp
                                             Date</label>
-                                        <input class="form-control" type="text" placeholder="mm/yyyy">
+                                        <input class="form-control" type="text" placeholder="mm/yyyy"
+                                               pattern="^(0[1-9]|1[0-2])\/\d{2}$">
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -156,19 +94,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-4 text-center pt-2 d-none d-sm-block">
-                            <div class="rounded p-2 mt-3 bg-100">
-                                <div class="text-uppercase fs--2 font-weight-bold">We Accept</div>
-                                <img src="../assets/img/icons/icon-payment-methods-grid.png" alt="" width="120">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="custom-control custom-radio">
-                        <input class="custom-control-input" type="radio" name="payment-method" id="paypal">
-                        <label class="custom-control-label" for="paypal"><img class="pull-right"
-                                                                              src="../assets/img/icons/icon-paypal-full.png"
-                                                                              height="20" alt="">
-                        </label>
                     </div>
                     <hr class="border-dashed my-5">
                     <div class="row">
@@ -207,7 +132,8 @@
                         </div>
                         <div class="col-md-5 col-xl-12 col-xxl-5 pl-lg-4 pl-xl-2 pl-xxl-5 text-center text-md-left text-xl-center text-xxl-left">
                             <hr class="border-dashed d-block d-md-none d-xl-block d-xxl-none my-4">
-                            <div class="fs-2 font-weight-semi-bold">All Total: <span class="text-primary">$3320</span>
+                            <div class="fs-2 font-weight-semi-bold">All Total: <span
+                                    class="text-primary">${{ subtotal_cost|add:shipping_cost }}</span>
                             </div>
                             <button class="btn btn-success mt-3 px-5" type="submit">Confirm &amp; Pay</button>
                             <p class="fs--1 mt-3 mb-0">By clicking <strong>Confirm &amp; Pay </strong>button you agree

@@ -125,6 +125,6 @@ class Cart(Model):
 
 
 class CartItem(Model):
-    cart = ForeignKey('apps.Cart', CASCADE, related_name='items')
-    product = ForeignKey('apps.Product', CASCADE, related_name='items')
+    cart = ForeignKey('apps.Cart', CASCADE, related_name='cart_items')
+    product = ForeignKey('apps.Product', CASCADE, related_name='cart_items')
     quantity = PositiveIntegerField(verbose_name=_('Quantity'))
