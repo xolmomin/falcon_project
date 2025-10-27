@@ -21,3 +21,8 @@ class User(AbstractUser):
     @property
     def is_admin(self):
         return self.type == User.Type.ADMIN or self.is_superuser
+
+    @property
+    def full_name(self):
+        full_name = "%s %s" % (self.first_name, self.last_name)
+        return full_name.strip()

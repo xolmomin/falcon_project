@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q, Sum, F, Prefetch
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.encoding import force_bytes
@@ -9,9 +10,9 @@ from django.utils.http import urlsafe_base64_decode
 from django.views import View
 from django.views.generic import ListView, DetailView, FormView, CreateView
 
-from apps.forms import LoginForm, RegisterModelForm
+from apps.forms import LoginForm, RegisterModelForm, OrderCreateForm
 from apps.mixins import LoginNotRequiredMixin
-from apps.models import Product, User, CartItem, ProductImage, Order
+from apps.models import Product, User, CartItem, ProductImage, Order, OrderItem
 from apps.tokens import account_activation_token
 from apps.utils import send_registration_link
 
@@ -65,21 +66,42 @@ class OrderListView(ListView):
     context_object_name = 'orders'
 
 
-class CheckoutListView(LoginRequiredMixin, ListView):
-    queryset = CartItem.objects.all()
+class OrderCreateView(LoginRequiredMixin, CreateView):
+    queryset = Order.objects.all()
     template_name = 'apps/products/checkout.html'
-    context_object_name = 'cart_items'
+    form_class = OrderCreateForm
+    success_url = reverse_lazy('product_list_page')
 
-    def get_queryset(self):
-        qs = super().get_queryset()
-        return qs.filter(cart__user=self.request.user).annotate(
-            price=F('product__price') - F('product__discount_percentage') * F('product__price') / 100
-        )
+    def form_valid(self, form):
+        user = self.request.user
+        self.object = form.save(False)
+        self.object.user = user
+        self.object.save()
+        _total_price = 0
+        order_items = []
+        for cart_item in user.cart.cart_items.all():
+            _price = cart_item.product.price
+            _total_price += _price
+            order_items.append(OrderItem(
+                order=self.object,
+                product=cart_item.product,
+                quantity=cart_item.quantity,
+                price=_price
+            ))
+        OrderItem.objects.bulk_create(order_items)
+        user.cart.delete()
+        self.object.total_price = self.object.total_price
+        self.object.save(update_fields=['total_price'])
+        return HttpResponseRedirect(self.get_success_url())
 
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        qs = self.get_queryset()
+    def form_invalid(self, form):
+        return super().form_invalid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        qs = CartItem.objects.filter(cart__user=self.request.user)
         context['shipping_cost'] = qs.aggregate(Sum('product__price'))['product__price__sum']
+        context['cart_items'] = qs
         context['subtotal_cost'] = qs.aggregate(
             total_sum=Sum(
                 F('quantity') * (F('product__price') - F('product__discount_percentage') * F('product__price') / 100)
@@ -140,15 +162,3 @@ class RegisterCreateView(LoginNotRequiredMixin, CreateView):
         send_registration_link(user, f"http://{self.request.get_host()}")
         messages.success(self.request, "Ro'yxatdan muvaffaqiyatli o'tdingiz! Pochtangizni tekshiring.")
         return redirect(self.success_url)
-
-# n + 1 problem
-
-# select * from products; 10ta product
-# select * from category where id=1; 10ta product
-# select * from category where id=1; 10ta product
-# select * from category where id=1; 10ta product
-# select * from category where id=1; 10ta product
-# select * from category where id=1; 10ta product
-# select * from category where id=1; 10ta product
-# select * from category where id=1; 10ta product
-# select * from category where id=1; 10ta product

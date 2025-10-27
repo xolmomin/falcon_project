@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from apps.models import Product, Cart, CartItem, Category, Tag, ProductImage, User
+from apps.models import Product, Cart, CartItem, Category, Tag, ProductImage, User, Order, OrderItem
 
 
 @admin.register(Tag)
@@ -50,6 +50,18 @@ class ProductModelAdmin(admin.ModelAdmin):
     filter_horizontal = ['tags']
     search_fields = ['name']
 
+
 @admin.register(User)
 class UserModelAdmin(UserAdmin):
     pass
+
+
+class OrderItemStackedInline(admin.StackedInline):
+    model = OrderItem
+    min_num = 1
+    extra = 0
+
+
+@admin.register(Order)
+class OrderModelAdmin(admin.ModelAdmin):
+    inlines = OrderItemStackedInline,

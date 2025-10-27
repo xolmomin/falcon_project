@@ -34,6 +34,23 @@ http://10.30.14.70:8000/en/
 22. notificaiton ishlaydigan qilish
 
 
+23. order va order detailni toliq qilish
+24. profile settings page ni togrilash (
+rasm update qilish ham ishlashi kk
+change password joyi ham kk
+)
+
+25. order ga shipping addressni qoshish kerak
+26. dashboard (oldi-sotdi statistics kerak)
+27. productni turli qilish
+
+28. https://uzum.uz/uz/product/smartfon-samsung-galaxy-qora---1-1581732?skuId=5224516
+2 dona xarid qilish mumkin
+Bu haftada 3 kishi sotib oldi
+
+
+
+
 ./manage.py sendtestemail sarsenovmanas186@gmail.com
 
 

@@ -133,583 +133,77 @@
                             </thead>
                             <tbody id="orders">
 
+                            {% for order in orders %}
+                                <tr class="btn-reveal-trigger {% if forloop.counter|divisibleby:2 %}odd{% else %}even{% endif %}"
+                                    role="row">
+                                    <td class="py-2 align-middle sorting_1">
+                                        <div class="custom-control custom-checkbox">
+                                            <input class="custom-control-input checkbox-bulk-select-target"
+                                                   type="checkbox" id="checkbox-0">
+                                            <label class="custom-control-label" for="checkbox-0"></label>
+                                        </div>
+                                    </td>
+                                    <td class="py-2 align-middle white-space-nowrap"><a
+                                            href="../e-commerce/order-details.html">
+                                        <strong>#{{ order.id }}</strong></a> by
+                                        <strong>
+                                            {{ order.user.full_name }}
+                                        </strong>
+                                        <br>
+                                        <a href="mailto:ricky@example.com">ricky@example.com</a>
+                                    </td>
+                                    <td class="py-2 align-middle">{{ order.created_at|date:'d/m/Y' }}</td>
+                                    <td class="py-2 align-middle">Ricky Antony, 2392 Main Avenue, Penasauka, New Jersey
+                                        02149
+                                        <p class="mb-0 text-500">Via Flat Rate</p>
+                                    </td>
+                                    <td class="py-2 align-middle text-center fs-0 white-space-nowrap"><span
+                                            class="badge badge rounded-capsule d-block badge-soft-success">Completed<svg
+                                            class="svg-inline--fa fa-check fa-w-16 ml-1" data-fa-transform="shrink-2"
+                                            aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check"
+                                            role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                            data-fa-i2svg="" style="transform-origin: 0.5em 0.5em;"><g
+                                            transform="translate(256 256)"><g
+                                            transform="translate(0, 0)  scale(0.875, 0.875)  rotate(0 0 0)"><path
+                                            fill="currentColor"
+                                            d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
+                                            transform="translate(-256 -256)"></path></g></g></svg>
+                                        <!-- <span class="ml-1 fas fa-check" data-fa-transform="shrink-2"></span> Font Awesome fontawesome.com --></span>
+                                    </td>
+                                    <td class="py-2 align-middle text-right fs-0 font-weight-medium">$99</td>
+                                    <td class="py-2 align-middle white-space-nowrap">
+                                        <div class="dropdown text-sans-serif">
+                                            <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal mr-3"
+                                                    type="button" id="order-dropdown-0" data-toggle="dropdown"
+                                                    data-boundary="viewport" aria-haspopup="true" aria-expanded="false">
+                                                <svg class="svg-inline--fa fa-ellipsis-h fa-w-16 fs--1"
+                                                     aria-hidden="true"
+                                                     focusable="false" data-prefix="fas" data-icon="ellipsis-h"
+                                                     role="img"
+                                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                                     data-fa-i2svg="">
+                                                    <path fill="currentColor"
+                                                          d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path>
+                                                </svg>
+                                                <!-- <span class="fas fa-ellipsis-h fs--1"></span> Font Awesome fontawesome.com -->
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right border py-0"
+                                                 aria-labelledby="order-dropdown-0">
+                                                <div class="bg-white py-2"><a class="dropdown-item"
+                                                                              href="#!">Completed</a><a
+                                                        class="dropdown-item" href="#!">Processing</a><a
+                                                        class="dropdown-item" href="#!">On Hold</a><a
+                                                        class="dropdown-item"
+                                                        href="#!">Pending</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a class="dropdown-item text-danger" href="#!">Delete</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
 
-                            <tr class="btn-reveal-trigger odd" role="row">
-                                <td class="py-2 align-middle sorting_1">
-                                    <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input checkbox-bulk-select-target" type="checkbox"
-                                               id="checkbox-0">
-                                        <label class="custom-control-label" for="checkbox-0"></label>
-                                    </div>
-                                </td>
-                                <td class="py-2 align-middle white-space-nowrap"><a
-                                        href="../e-commerce/order-details.html"> <strong>#181</strong></a> by <strong>Ricky
-                                    Antony</strong><br><a href="mailto:ricky@example.com">ricky@example.com</a></td>
-                                <td class="py-2 align-middle">20/04/2019</td>
-                                <td class="py-2 align-middle">Ricky Antony, 2392 Main Avenue, Penasauka, New Jersey
-                                    02149
-                                    <p class="mb-0 text-500">Via Flat Rate</p>
-                                </td>
-                                <td class="py-2 align-middle text-center fs-0 white-space-nowrap"><span
-                                        class="badge badge rounded-capsule d-block badge-soft-success">Completed<svg
-                                        class="svg-inline--fa fa-check fa-w-16 ml-1" data-fa-transform="shrink-2"
-                                        aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check"
-                                        role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                        data-fa-i2svg="" style="transform-origin: 0.5em 0.5em;"><g
-                                        transform="translate(256 256)"><g
-                                        transform="translate(0, 0)  scale(0.875, 0.875)  rotate(0 0 0)"><path
-                                        fill="currentColor"
-                                        d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
-                                        transform="translate(-256 -256)"></path></g></g></svg>
-                                    <!-- <span class="ml-1 fas fa-check" data-fa-transform="shrink-2"></span> Font Awesome fontawesome.com --></span>
-                                </td>
-                                <td class="py-2 align-middle text-right fs-0 font-weight-medium">$99</td>
-                                <td class="py-2 align-middle white-space-nowrap">
-                                    <div class="dropdown text-sans-serif">
-                                        <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal mr-3"
-                                                type="button" id="order-dropdown-0" data-toggle="dropdown"
-                                                data-boundary="viewport" aria-haspopup="true" aria-expanded="false">
-                                            <svg class="svg-inline--fa fa-ellipsis-h fa-w-16 fs--1" aria-hidden="true"
-                                                 focusable="false" data-prefix="fas" data-icon="ellipsis-h" role="img"
-                                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                                 data-fa-i2svg="">
-                                                <path fill="currentColor"
-                                                      d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path>
-                                            </svg>
-                                            <!-- <span class="fas fa-ellipsis-h fs--1"></span> Font Awesome fontawesome.com -->
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-right border py-0"
-                                             aria-labelledby="order-dropdown-0">
-                                            <div class="bg-white py-2"><a class="dropdown-item"
-                                                                          href="#!">Completed</a><a
-                                                    class="dropdown-item" href="#!">Processing</a><a
-                                                    class="dropdown-item" href="#!">On Hold</a><a class="dropdown-item"
-                                                                                                  href="#!">Pending</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item text-danger" href="#!">Delete</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="btn-reveal-trigger even" role="row">
-                                <td class="py-2 align-middle sorting_1">
-                                    <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input checkbox-bulk-select-target" type="checkbox"
-                                               id="checkbox-1">
-                                        <label class="custom-control-label" for="checkbox-1"></label>
-                                    </div>
-                                </td>
-                                <td class="py-2 align-middle white-space-nowrap"><a
-                                        href="../e-commerce/order-details.html"> <strong>#182</strong></a> by <strong>Kin
-                                    Rossow</strong><br><a href="mailto:kin@example.com">kin@example.com</a></td>
-                                <td class="py-2 align-middle">20/04/2019</td>
-                                <td class="py-2 align-middle">Kin Rossow, 1 Hollywood Blvd,Beverly Hills, California
-                                    90210
-                                    <p class="mb-0 text-500">Via Free Shipping</p>
-                                </td>
-                                <td class="py-2 align-middle text-center fs-0 white-space-nowrap"><span
-                                        class="badge badge rounded-capsule d-block badge-soft-primary">Processing<svg
-                                        class="svg-inline--fa fa-redo fa-w-16 ml-1" data-fa-transform="shrink-2"
-                                        aria-hidden="true" focusable="false" data-prefix="fas" data-icon="redo"
-                                        role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                        data-fa-i2svg="" style="transform-origin: 0.5em 0.5em;"><g
-                                        transform="translate(256 256)"><g
-                                        transform="translate(0, 0)  scale(0.875, 0.875)  rotate(0 0 0)"><path
-                                        fill="currentColor"
-                                        d="M500.33 0h-47.41a12 12 0 0 0-12 12.57l4 82.76A247.42 247.42 0 0 0 256 8C119.34 8 7.9 119.53 8 256.19 8.1 393.07 119.1 504 256 504a247.1 247.1 0 0 0 166.18-63.91 12 12 0 0 0 .48-17.43l-34-34a12 12 0 0 0-16.38-.55A176 176 0 1 1 402.1 157.8l-101.53-4.87a12 12 0 0 0-12.57 12v47.41a12 12 0 0 0 12 12h200.33a12 12 0 0 0 12-12V12a12 12 0 0 0-12-12z"
-                                        transform="translate(-256 -256)"></path></g></g></svg>
-                                    <!-- <span class="ml-1 fas fa-redo" data-fa-transform="shrink-2"></span> Font Awesome fontawesome.com --></span>
-                                </td>
-                                <td class="py-2 align-middle text-right fs-0 font-weight-medium">$120</td>
-                                <td class="py-2 align-middle white-space-nowrap">
-                                    <div class="dropdown text-sans-serif">
-                                        <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal mr-3"
-                                                type="button" id="order-dropdown-1" data-toggle="dropdown"
-                                                data-boundary="viewport" aria-haspopup="true" aria-expanded="false">
-                                            <svg class="svg-inline--fa fa-ellipsis-h fa-w-16 fs--1" aria-hidden="true"
-                                                 focusable="false" data-prefix="fas" data-icon="ellipsis-h" role="img"
-                                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                                 data-fa-i2svg="">
-                                                <path fill="currentColor"
-                                                      d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path>
-                                            </svg>
-                                            <!-- <span class="fas fa-ellipsis-h fs--1"></span> Font Awesome fontawesome.com -->
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-right border py-0"
-                                             aria-labelledby="order-dropdown-1">
-                                            <div class="bg-white py-2"><a class="dropdown-item"
-                                                                          href="#!">Completed</a><a
-                                                    class="dropdown-item" href="#!">Processing</a><a
-                                                    class="dropdown-item" href="#!">On Hold</a><a class="dropdown-item"
-                                                                                                  href="#!">Pending</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item text-danger" href="#!">Delete</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="btn-reveal-trigger odd" role="row">
-                                <td class="py-2 align-middle sorting_1">
-                                    <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input checkbox-bulk-select-target" type="checkbox"
-                                               id="checkbox-2">
-                                        <label class="custom-control-label" for="checkbox-2"></label>
-                                    </div>
-                                </td>
-                                <td class="py-2 align-middle white-space-nowrap"><a
-                                        href="../e-commerce/order-details.html"> <strong>#183</strong></a> by <strong>Merry
-                                    Diana</strong><br><a href="mailto:merry@example.com">merry@example.com</a></td>
-                                <td class="py-2 align-middle">30/04/2019</td>
-                                <td class="py-2 align-middle">Merry Diana, 1 Infinite Loop, Cupertino, California 90210
-                                    <p class="mb-0 text-500">Via Link Road</p>
-                                </td>
-                                <td class="py-2 align-middle text-center fs-0 white-space-nowrap"><span
-                                        class="badge badge rounded-capsule d-block badge-soft-secondary">On Hold<svg
-                                        class="svg-inline--fa fa-ban fa-w-16 ml-1" data-fa-transform="shrink-2"
-                                        aria-hidden="true" focusable="false" data-prefix="fas" data-icon="ban"
-                                        role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                        data-fa-i2svg="" style="transform-origin: 0.5em 0.5em;"><g
-                                        transform="translate(256 256)"><g
-                                        transform="translate(0, 0)  scale(0.875, 0.875)  rotate(0 0 0)"><path
-                                        fill="currentColor"
-                                        d="M256 8C119.034 8 8 119.033 8 256s111.034 248 248 248 248-111.034 248-248S392.967 8 256 8zm130.108 117.892c65.448 65.448 70 165.481 20.677 235.637L150.47 105.216c70.204-49.356 170.226-44.735 235.638 20.676zM125.892 386.108c-65.448-65.448-70-165.481-20.677-235.637L361.53 406.784c-70.203 49.356-170.226 44.736-235.638-20.676z"
-                                        transform="translate(-256 -256)"></path></g></g></svg>
-                                    <!-- <span class="ml-1 fas fa-ban" data-fa-transform="shrink-2"></span> Font Awesome fontawesome.com --></span>
-                                </td>
-                                <td class="py-2 align-middle text-right fs-0 font-weight-medium">$70</td>
-                                <td class="py-2 align-middle white-space-nowrap">
-                                    <div class="dropdown text-sans-serif">
-                                        <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal mr-3"
-                                                type="button" id="order-dropdown-2" data-toggle="dropdown"
-                                                data-boundary="viewport" aria-haspopup="true" aria-expanded="false">
-                                            <svg class="svg-inline--fa fa-ellipsis-h fa-w-16 fs--1" aria-hidden="true"
-                                                 focusable="false" data-prefix="fas" data-icon="ellipsis-h" role="img"
-                                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                                 data-fa-i2svg="">
-                                                <path fill="currentColor"
-                                                      d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path>
-                                            </svg>
-                                            <!-- <span class="fas fa-ellipsis-h fs--1"></span> Font Awesome fontawesome.com -->
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-right border py-0"
-                                             aria-labelledby="order-dropdown-2">
-                                            <div class="bg-white py-2"><a class="dropdown-item"
-                                                                          href="#!">Completed</a><a
-                                                    class="dropdown-item" href="#!">Processing</a><a
-                                                    class="dropdown-item" href="#!">On Hold</a><a class="dropdown-item"
-                                                                                                  href="#!">Pending</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item text-danger" href="#!">Delete</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="btn-reveal-trigger even" role="row">
-                                <td class="py-2 align-middle sorting_1">
-                                    <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input checkbox-bulk-select-target" type="checkbox"
-                                               id="checkbox-3">
-                                        <label class="custom-control-label" for="checkbox-3"></label>
-                                    </div>
-                                </td>
-                                <td class="py-2 align-middle white-space-nowrap"><a
-                                        href="../e-commerce/order-details.html"> <strong>#184</strong></a> by <strong>Bucky
-                                    Robert</strong><br><a href="mailto:bucky@example.com">bucky@example.com</a></td>
-                                <td class="py-2 align-middle">30/04/2019</td>
-                                <td class="py-2 align-middle">Bucky Robert, 1 Infinite Loop, Cupertino, California 90210
-                                    <p class="mb-0 text-500">Via Free Shipping</p>
-                                </td>
-                                <td class="py-2 align-middle text-center fs-0 white-space-nowrap"><span
-                                        class="badge badge rounded-capsule d-block badge-soft-warning">Pending<svg
-                                        class="svg-inline--fa fa-stream fa-w-16 ml-1" data-fa-transform="shrink-2"
-                                        aria-hidden="true" focusable="false" data-prefix="fas" data-icon="stream"
-                                        role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                        data-fa-i2svg="" style="transform-origin: 0.5em 0.5em;"><g
-                                        transform="translate(256 256)"><g
-                                        transform="translate(0, 0)  scale(0.875, 0.875)  rotate(0 0 0)"><path
-                                        fill="currentColor"
-                                        d="M16 128h416c8.84 0 16-7.16 16-16V48c0-8.84-7.16-16-16-16H16C7.16 32 0 39.16 0 48v64c0 8.84 7.16 16 16 16zm480 80H80c-8.84 0-16 7.16-16 16v64c0 8.84 7.16 16 16 16h416c8.84 0 16-7.16 16-16v-64c0-8.84-7.16-16-16-16zm-64 176H16c-8.84 0-16 7.16-16 16v64c0 8.84 7.16 16 16 16h416c8.84 0 16-7.16 16-16v-64c0-8.84-7.16-16-16-16z"
-                                        transform="translate(-256 -256)"></path></g></g></svg>
-                                    <!-- <span class="ml-1 fas fa-stream" data-fa-transform="shrink-2"></span> Font Awesome fontawesome.com --></span>
-                                </td>
-                                <td class="py-2 align-middle text-right fs-0 font-weight-medium">$92</td>
-                                <td class="py-2 align-middle white-space-nowrap">
-                                    <div class="dropdown text-sans-serif">
-                                        <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal mr-3"
-                                                type="button" id="order-dropdown-3" data-toggle="dropdown"
-                                                data-boundary="viewport" aria-haspopup="true" aria-expanded="false">
-                                            <svg class="svg-inline--fa fa-ellipsis-h fa-w-16 fs--1" aria-hidden="true"
-                                                 focusable="false" data-prefix="fas" data-icon="ellipsis-h" role="img"
-                                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                                 data-fa-i2svg="">
-                                                <path fill="currentColor"
-                                                      d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path>
-                                            </svg>
-                                            <!-- <span class="fas fa-ellipsis-h fs--1"></span> Font Awesome fontawesome.com -->
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-right border py-0"
-                                             aria-labelledby="order-dropdown-3">
-                                            <div class="bg-white py-2"><a class="dropdown-item"
-                                                                          href="#!">Completed</a><a
-                                                    class="dropdown-item" href="#!">Processing</a><a
-                                                    class="dropdown-item" href="#!">On Hold</a><a class="dropdown-item"
-                                                                                                  href="#!">Pending</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item text-danger" href="#!">Delete</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="btn-reveal-trigger odd" role="row">
-                                <td class="py-2 align-middle sorting_1">
-                                    <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input checkbox-bulk-select-target" type="checkbox"
-                                               id="checkbox-4">
-                                        <label class="custom-control-label" for="checkbox-4"></label>
-                                    </div>
-                                </td>
-                                <td class="py-2 align-middle white-space-nowrap"><a
-                                        href="../e-commerce/order-details.html"> <strong>#185</strong></a> by <strong>Rocky
-                                    Zampa</strong><br><a href="mailto:rocky@example.com">rocky@example.com</a></td>
-                                <td class="py-2 align-middle">30/04/2019</td>
-                                <td class="py-2 align-middle">Rocky Zampa, 1 Infinite Loop, Cupertino, California 90210
-                                    <p class="mb-0 text-500">Via Free Road</p>
-                                </td>
-                                <td class="py-2 align-middle text-center fs-0 white-space-nowrap"><span
-                                        class="badge badge rounded-capsule d-block badge-soft-secondary">On Hold<svg
-                                        class="svg-inline--fa fa-ban fa-w-16 ml-1" data-fa-transform="shrink-2"
-                                        aria-hidden="true" focusable="false" data-prefix="fas" data-icon="ban"
-                                        role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                        data-fa-i2svg="" style="transform-origin: 0.5em 0.5em;"><g
-                                        transform="translate(256 256)"><g
-                                        transform="translate(0, 0)  scale(0.875, 0.875)  rotate(0 0 0)"><path
-                                        fill="currentColor"
-                                        d="M256 8C119.034 8 8 119.033 8 256s111.034 248 248 248 248-111.034 248-248S392.967 8 256 8zm130.108 117.892c65.448 65.448 70 165.481 20.677 235.637L150.47 105.216c70.204-49.356 170.226-44.735 235.638 20.676zM125.892 386.108c-65.448-65.448-70-165.481-20.677-235.637L361.53 406.784c-70.203 49.356-170.226 44.736-235.638-20.676z"
-                                        transform="translate(-256 -256)"></path></g></g></svg>
-                                    <!-- <span class="ml-1 fas fa-ban" data-fa-transform="shrink-2"></span> Font Awesome fontawesome.com --></span>
-                                </td>
-                                <td class="py-2 align-middle text-right fs-0 font-weight-medium">$120</td>
-                                <td class="py-2 align-middle white-space-nowrap">
-                                    <div class="dropdown text-sans-serif">
-                                        <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal mr-3"
-                                                type="button" id="order-dropdown-4" data-toggle="dropdown"
-                                                data-boundary="viewport" aria-haspopup="true" aria-expanded="false">
-                                            <svg class="svg-inline--fa fa-ellipsis-h fa-w-16 fs--1" aria-hidden="true"
-                                                 focusable="false" data-prefix="fas" data-icon="ellipsis-h" role="img"
-                                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                                 data-fa-i2svg="">
-                                                <path fill="currentColor"
-                                                      d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path>
-                                            </svg>
-                                            <!-- <span class="fas fa-ellipsis-h fs--1"></span> Font Awesome fontawesome.com -->
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-right border py-0"
-                                             aria-labelledby="order-dropdown-4">
-                                            <div class="bg-white py-2"><a class="dropdown-item"
-                                                                          href="#!">Completed</a><a
-                                                    class="dropdown-item" href="#!">Processing</a><a
-                                                    class="dropdown-item" href="#!">On Hold</a><a class="dropdown-item"
-                                                                                                  href="#!">Pending</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item text-danger" href="#!">Delete</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="btn-reveal-trigger even" role="row">
-                                <td class="py-2 align-middle sorting_1">
-                                    <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input checkbox-bulk-select-target" type="checkbox"
-                                               id="checkbox-5">
-                                        <label class="custom-control-label" for="checkbox-5"></label>
-                                    </div>
-                                </td>
-                                <td class="py-2 align-middle white-space-nowrap"><a
-                                        href="../e-commerce/order-details.html"> <strong>#186</strong></a> by <strong>Ricky
-                                    John</strong><br><a href="mailto:ricky@example.com">ricky@example.com</a></td>
-                                <td class="py-2 align-middle">30/04/2019</td>
-                                <td class="py-2 align-middle">Ricky John, 1 Infinite Loop, Cupertino, California 90210
-                                    <p class="mb-0 text-500">Via Free Shipping</p>
-                                </td>
-                                <td class="py-2 align-middle text-center fs-0 white-space-nowrap"><span
-                                        class="badge badge rounded-capsule d-block badge-soft-primary">Processing<svg
-                                        class="svg-inline--fa fa-redo fa-w-16 ml-1" data-fa-transform="shrink-2"
-                                        aria-hidden="true" focusable="false" data-prefix="fas" data-icon="redo"
-                                        role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                        data-fa-i2svg="" style="transform-origin: 0.5em 0.5em;"><g
-                                        transform="translate(256 256)"><g
-                                        transform="translate(0, 0)  scale(0.875, 0.875)  rotate(0 0 0)"><path
-                                        fill="currentColor"
-                                        d="M500.33 0h-47.41a12 12 0 0 0-12 12.57l4 82.76A247.42 247.42 0 0 0 256 8C119.34 8 7.9 119.53 8 256.19 8.1 393.07 119.1 504 256 504a247.1 247.1 0 0 0 166.18-63.91 12 12 0 0 0 .48-17.43l-34-34a12 12 0 0 0-16.38-.55A176 176 0 1 1 402.1 157.8l-101.53-4.87a12 12 0 0 0-12.57 12v47.41a12 12 0 0 0 12 12h200.33a12 12 0 0 0 12-12V12a12 12 0 0 0-12-12z"
-                                        transform="translate(-256 -256)"></path></g></g></svg>
-                                    <!-- <span class="ml-1 fas fa-redo" data-fa-transform="shrink-2"></span> Font Awesome fontawesome.com --></span>
-                                </td>
-                                <td class="py-2 align-middle text-right fs-0 font-weight-medium">$145</td>
-                                <td class="py-2 align-middle white-space-nowrap">
-                                    <div class="dropdown text-sans-serif">
-                                        <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal mr-3"
-                                                type="button" id="order-dropdown-5" data-toggle="dropdown"
-                                                data-boundary="viewport" aria-haspopup="true" aria-expanded="false">
-                                            <svg class="svg-inline--fa fa-ellipsis-h fa-w-16 fs--1" aria-hidden="true"
-                                                 focusable="false" data-prefix="fas" data-icon="ellipsis-h" role="img"
-                                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                                 data-fa-i2svg="">
-                                                <path fill="currentColor"
-                                                      d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path>
-                                            </svg>
-                                            <!-- <span class="fas fa-ellipsis-h fs--1"></span> Font Awesome fontawesome.com -->
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-right border py-0"
-                                             aria-labelledby="order-dropdown-5">
-                                            <div class="bg-white py-2"><a class="dropdown-item"
-                                                                          href="#!">Completed</a><a
-                                                    class="dropdown-item" href="#!">Processing</a><a
-                                                    class="dropdown-item" href="#!">On Hold</a><a class="dropdown-item"
-                                                                                                  href="#!">Pending</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item text-danger" href="#!">Delete</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="btn-reveal-trigger odd" role="row">
-                                <td class="py-2 align-middle sorting_1">
-                                    <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input checkbox-bulk-select-target" type="checkbox"
-                                               id="checkbox-6">
-                                        <label class="custom-control-label" for="checkbox-6"></label>
-                                    </div>
-                                </td>
-                                <td class="py-2 align-middle white-space-nowrap"><a
-                                        href="../e-commerce/order-details.html"> <strong>#187</strong></a> by <strong>Cristofer
-                                    Henric</strong><br><a href="mailto:cristofer@example.com">cristofer@example.com</a>
-                                </td>
-                                <td class="py-2 align-middle">30/04/2019</td>
-                                <td class="py-2 align-middle">Cristofer Henric, 1 Infinite Loop, Cupertino, California
-                                    90210
-                                    <p class="mb-0 text-500">Via Flat Rate</p>
-                                </td>
-                                <td class="py-2 align-middle text-center fs-0 white-space-nowrap"><span
-                                        class="badge badge rounded-capsule d-block badge-soft-success">Completed<svg
-                                        class="svg-inline--fa fa-check fa-w-16 ml-1" data-fa-transform="shrink-2"
-                                        aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check"
-                                        role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                        data-fa-i2svg="" style="transform-origin: 0.5em 0.5em;"><g
-                                        transform="translate(256 256)"><g
-                                        transform="translate(0, 0)  scale(0.875, 0.875)  rotate(0 0 0)"><path
-                                        fill="currentColor"
-                                        d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
-                                        transform="translate(-256 -256)"></path></g></g></svg>
-                                    <!-- <span class="ml-1 fas fa-check" data-fa-transform="shrink-2"></span> Font Awesome fontawesome.com --></span>
-                                </td>
-                                <td class="py-2 align-middle text-right fs-0 font-weight-medium">$55</td>
-                                <td class="py-2 align-middle white-space-nowrap">
-                                    <div class="dropdown text-sans-serif">
-                                        <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal mr-3"
-                                                type="button" id="order-dropdown-6" data-toggle="dropdown"
-                                                data-boundary="viewport" aria-haspopup="true" aria-expanded="false">
-                                            <svg class="svg-inline--fa fa-ellipsis-h fa-w-16 fs--1" aria-hidden="true"
-                                                 focusable="false" data-prefix="fas" data-icon="ellipsis-h" role="img"
-                                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                                 data-fa-i2svg="">
-                                                <path fill="currentColor"
-                                                      d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path>
-                                            </svg>
-                                            <!-- <span class="fas fa-ellipsis-h fs--1"></span> Font Awesome fontawesome.com -->
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-right border py-0"
-                                             aria-labelledby="order-dropdown-6">
-                                            <div class="bg-white py-2"><a class="dropdown-item"
-                                                                          href="#!">Completed</a><a
-                                                    class="dropdown-item" href="#!">Processing</a><a
-                                                    class="dropdown-item" href="#!">On Hold</a><a class="dropdown-item"
-                                                                                                  href="#!">Pending</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item text-danger" href="#!">Delete</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="btn-reveal-trigger even" role="row">
-                                <td class="py-2 align-middle sorting_1">
-                                    <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input checkbox-bulk-select-target" type="checkbox"
-                                               id="checkbox-7">
-                                        <label class="custom-control-label" for="checkbox-7"></label>
-                                    </div>
-                                </td>
-                                <td class="py-2 align-middle white-space-nowrap"><a
-                                        href="../e-commerce/order-details.html"> <strong>#188</strong></a> by <strong>Brate
-                                    Lee</strong><br><a href="mailto:lee@example.com">lee@example.com</a></td>
-                                <td class="py-2 align-middle">29/04/2019</td>
-                                <td class="py-2 align-middle">Brate Lee, 1 Infinite Loop, Cupertino, California 90210
-                                    <p class="mb-0 text-500">Via Link Road</p>
-                                </td>
-                                <td class="py-2 align-middle text-center fs-0 white-space-nowrap"><span
-                                        class="badge badge rounded-capsule d-block badge-soft-secondary">On Hold<svg
-                                        class="svg-inline--fa fa-ban fa-w-16 ml-1" data-fa-transform="shrink-2"
-                                        aria-hidden="true" focusable="false" data-prefix="fas" data-icon="ban"
-                                        role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                        data-fa-i2svg="" style="transform-origin: 0.5em 0.5em;"><g
-                                        transform="translate(256 256)"><g
-                                        transform="translate(0, 0)  scale(0.875, 0.875)  rotate(0 0 0)"><path
-                                        fill="currentColor"
-                                        d="M256 8C119.034 8 8 119.033 8 256s111.034 248 248 248 248-111.034 248-248S392.967 8 256 8zm130.108 117.892c65.448 65.448 70 165.481 20.677 235.637L150.47 105.216c70.204-49.356 170.226-44.735 235.638 20.676zM125.892 386.108c-65.448-65.448-70-165.481-20.677-235.637L361.53 406.784c-70.203 49.356-170.226 44.736-235.638-20.676z"
-                                        transform="translate(-256 -256)"></path></g></g></svg>
-                                    <!-- <span class="ml-1 fas fa-ban" data-fa-transform="shrink-2"></span> Font Awesome fontawesome.com --></span>
-                                </td>
-                                <td class="py-2 align-middle text-right fs-0 font-weight-medium">$90</td>
-                                <td class="py-2 align-middle white-space-nowrap">
-                                    <div class="dropdown text-sans-serif">
-                                        <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal mr-3"
-                                                type="button" id="order-dropdown-7" data-toggle="dropdown"
-                                                data-boundary="viewport" aria-haspopup="true" aria-expanded="false">
-                                            <svg class="svg-inline--fa fa-ellipsis-h fa-w-16 fs--1" aria-hidden="true"
-                                                 focusable="false" data-prefix="fas" data-icon="ellipsis-h" role="img"
-                                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                                 data-fa-i2svg="">
-                                                <path fill="currentColor"
-                                                      d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path>
-                                            </svg>
-                                            <!-- <span class="fas fa-ellipsis-h fs--1"></span> Font Awesome fontawesome.com -->
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-right border py-0"
-                                             aria-labelledby="order-dropdown-7">
-                                            <div class="bg-white py-2"><a class="dropdown-item"
-                                                                          href="#!">Completed</a><a
-                                                    class="dropdown-item" href="#!">Processing</a><a
-                                                    class="dropdown-item" href="#!">On Hold</a><a class="dropdown-item"
-                                                                                                  href="#!">Pending</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item text-danger" href="#!">Delete</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="btn-reveal-trigger odd" role="row">
-                                <td class="py-2 align-middle sorting_1">
-                                    <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input checkbox-bulk-select-target" type="checkbox"
-                                               id="checkbox-8">
-                                        <label class="custom-control-label" for="checkbox-8"></label>
-                                    </div>
-                                </td>
-                                <td class="py-2 align-middle white-space-nowrap"><a
-                                        href="../e-commerce/order-details.html"> <strong>#189</strong></a> by <strong>Thomas
-                                    Stephenson</strong><br><a href="mailto:Stephenson@example.com">Stephenson@example.com</a>
-                                </td>
-                                <td class="py-2 align-middle">29/04/2019</td>
-                                <td class="py-2 align-middle">Thomas Stephenson, 116 Ballifeary Road, Bamff
-                                    <p class="mb-0 text-500">Via Flat Rate</p>
-                                </td>
-                                <td class="py-2 align-middle text-center fs-0 white-space-nowrap"><span
-                                        class="badge badge rounded-capsule d-block badge-soft-primary">Processing<svg
-                                        class="svg-inline--fa fa-redo fa-w-16 ml-1" data-fa-transform="shrink-2"
-                                        aria-hidden="true" focusable="false" data-prefix="fas" data-icon="redo"
-                                        role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                        data-fa-i2svg="" style="transform-origin: 0.5em 0.5em;"><g
-                                        transform="translate(256 256)"><g
-                                        transform="translate(0, 0)  scale(0.875, 0.875)  rotate(0 0 0)"><path
-                                        fill="currentColor"
-                                        d="M500.33 0h-47.41a12 12 0 0 0-12 12.57l4 82.76A247.42 247.42 0 0 0 256 8C119.34 8 7.9 119.53 8 256.19 8.1 393.07 119.1 504 256 504a247.1 247.1 0 0 0 166.18-63.91 12 12 0 0 0 .48-17.43l-34-34a12 12 0 0 0-16.38-.55A176 176 0 1 1 402.1 157.8l-101.53-4.87a12 12 0 0 0-12.57 12v47.41a12 12 0 0 0 12 12h200.33a12 12 0 0 0 12-12V12a12 12 0 0 0-12-12z"
-                                        transform="translate(-256 -256)"></path></g></g></svg>
-                                    <!-- <span class="ml-1 fas fa-redo" data-fa-transform="shrink-2"></span> Font Awesome fontawesome.com --></span>
-                                </td>
-                                <td class="py-2 align-middle text-right fs-0 font-weight-medium">$52</td>
-                                <td class="py-2 align-middle white-space-nowrap">
-                                    <div class="dropdown text-sans-serif">
-                                        <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal mr-3"
-                                                type="button" id="order-dropdown-8" data-toggle="dropdown"
-                                                data-boundary="viewport" aria-haspopup="true" aria-expanded="false">
-                                            <svg class="svg-inline--fa fa-ellipsis-h fa-w-16 fs--1" aria-hidden="true"
-                                                 focusable="false" data-prefix="fas" data-icon="ellipsis-h" role="img"
-                                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                                 data-fa-i2svg="">
-                                                <path fill="currentColor"
-                                                      d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path>
-                                            </svg>
-                                            <!-- <span class="fas fa-ellipsis-h fs--1"></span> Font Awesome fontawesome.com -->
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-right border py-0"
-                                             aria-labelledby="order-dropdown-8">
-                                            <div class="bg-white py-2"><a class="dropdown-item"
-                                                                          href="#!">Completed</a><a
-                                                    class="dropdown-item" href="#!">Processing</a><a
-                                                    class="dropdown-item" href="#!">On Hold</a><a class="dropdown-item"
-                                                                                                  href="#!">Pending</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item text-danger" href="#!">Delete</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="btn-reveal-trigger even" role="row">
-                                <td class="py-2 align-middle sorting_1">
-                                    <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input checkbox-bulk-select-target" type="checkbox"
-                                               id="checkbox-9">
-                                        <label class="custom-control-label" for="checkbox-9"></label>
-                                    </div>
-                                </td>
-                                <td class="py-2 align-middle white-space-nowrap"><a
-                                        href="../e-commerce/order-details.html"> <strong>#190</strong></a> by <strong>Evie
-                                    Singh</strong><br><a href="mailto:eviewsing@example.com">eviewsing@example.com</a>
-                                </td>
-                                <td class="py-2 align-middle">29/04/2019</td>
-                                <td class="py-2 align-middle">Evie Singh, 54 Castledore Road, Tunstead
-                                    <p class="mb-0 text-500">Via Flat Rate</p>
-                                </td>
-                                <td class="py-2 align-middle text-center fs-0 white-space-nowrap"><span
-                                        class="badge badge rounded-capsule d-block badge-soft-success">Completed<svg
-                                        class="svg-inline--fa fa-check fa-w-16 ml-1" data-fa-transform="shrink-2"
-                                        aria-hidden="true" focusable="false" data-prefix="fas" data-icon="check"
-                                        role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                        data-fa-i2svg="" style="transform-origin: 0.5em 0.5em;"><g
-                                        transform="translate(256 256)"><g
-                                        transform="translate(0, 0)  scale(0.875, 0.875)  rotate(0 0 0)"><path
-                                        fill="currentColor"
-                                        d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
-                                        transform="translate(-256 -256)"></path></g></g></svg>
-                                    <!-- <span class="ml-1 fas fa-check" data-fa-transform="shrink-2"></span> Font Awesome fontawesome.com --></span>
-                                </td>
-                                <td class="py-2 align-middle text-right fs-0 font-weight-medium">$90</td>
-                                <td class="py-2 align-middle white-space-nowrap">
-                                    <div class="dropdown text-sans-serif">
-                                        <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal mr-3"
-                                                type="button" id="order-dropdown-9" data-toggle="dropdown"
-                                                data-boundary="viewport" aria-haspopup="true" aria-expanded="false">
-                                            <svg class="svg-inline--fa fa-ellipsis-h fa-w-16 fs--1" aria-hidden="true"
-                                                 focusable="false" data-prefix="fas" data-icon="ellipsis-h" role="img"
-                                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                                 data-fa-i2svg="">
-                                                <path fill="currentColor"
-                                                      d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path>
-                                            </svg>
-                                            <!-- <span class="fas fa-ellipsis-h fs--1"></span> Font Awesome fontawesome.com -->
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-right border py-0"
-                                             aria-labelledby="order-dropdown-9">
-                                            <div class="bg-white py-2"><a class="dropdown-item"
-                                                                          href="#!">Completed</a><a
-                                                    class="dropdown-item" href="#!">Processing</a><a
-                                                    class="dropdown-item" href="#!">On Hold</a><a class="dropdown-item"
-                                                                                                  href="#!">Pending</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item text-danger" href="#!">Delete</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
                             </tbody>
                         </table>
                     </div>
