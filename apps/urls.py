@@ -1,7 +1,7 @@
 from django.urls import path, re_path
 
 from apps.views import ProductListView, ProductDetailView, RegisterCreateView, LoginFormView, CustomLogoutView, \
-    ActivateAccountView, ShoppingCartListView, OrderCreateView, OrderListView
+    ActivateAccountView, ShoppingCartListView, OrderCreateView, OrderListView, ProfileTemplateView
 
 urlpatterns = [
     path('', ProductListView.as_view(), name='product_list_page'),
@@ -14,5 +14,6 @@ urlpatterns = [
     re_path(r'^auth/user/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,40})/$',
             ActivateAccountView.as_view(), name='confirm_email_page'),
     path('auth/register', RegisterCreateView.as_view(), name='register_page'),
+    path('profile', ProfileTemplateView.as_view(), name='profile_page'),
 
 ]

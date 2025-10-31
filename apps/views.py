@@ -8,7 +8,7 @@ from django.urls import reverse_lazy
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_decode
 from django.views import View
-from django.views.generic import ListView, DetailView, FormView, CreateView
+from django.views.generic import ListView, DetailView, FormView, CreateView, TemplateView
 
 from apps.forms import LoginForm, RegisterModelForm, OrderCreateForm
 from apps.mixins import LoginNotRequiredMixin
@@ -162,3 +162,7 @@ class RegisterCreateView(LoginNotRequiredMixin, CreateView):
         send_registration_link(user, f"http://{self.request.get_host()}")
         messages.success(self.request, "Ro'yxatdan muvaffaqiyatli o'tdingiz! Pochtangizni tekshiring.")
         return redirect(self.success_url)
+
+
+class ProfileTemplateView(TemplateView):
+    template_name = 'apps/auth/profile.html'
