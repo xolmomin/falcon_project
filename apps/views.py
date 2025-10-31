@@ -8,9 +8,9 @@ from django.urls import reverse_lazy
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_decode
 from django.views import View
-from django.views.generic import ListView, DetailView, FormView, CreateView, TemplateView
+from django.views.generic import ListView, DetailView, FormView, CreateView, TemplateView, UpdateView
 
-from apps.forms import LoginForm, RegisterModelForm, OrderCreateForm
+from apps.forms import LoginForm, RegisterModelForm, OrderCreateForm, ProfileChangePasswordModelForm
 from apps.mixins import LoginNotRequiredMixin
 from apps.models import Product, User, CartItem, ProductImage, Order, OrderItem
 from apps.tokens import account_activation_token
@@ -100,7 +100,7 @@ class OrderCreateView(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         qs = CartItem.objects.filter(cart__user=self.request.user)
-        context['shipping_cost'] = qs.aggregate(Sum('product__price'))['product__price__sum']
+        context['shipping_cost'] = qs.aggregate(Sum('product__shipping_cost'))['product__shipping_cost__sum']
         context['cart_items'] = qs
         context['subtotal_cost'] = qs.aggregate(
             total_sum=Sum(
@@ -164,5 +164,28 @@ class RegisterCreateView(LoginNotRequiredMixin, CreateView):
         return redirect(self.success_url)
 
 
-class ProfileTemplateView(TemplateView):
+class ProfileTemplateView(LoginRequiredMixin, TemplateView):
+    template_name = 'apps/auth/profile.html'
+
+
+class ProfileChangePasswordFormView(LoginRequiredMixin, FormView):
+    template_name = 'apps/auth/profile.html'
+    form_class = ProfileChangePasswordModelForm
+    success_url = reverse_lazy('profile_page')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'request': self.request})
+        return kwargs
+
+    def form_valid(self, form):
+        messages.success(self.request, "Successfully updated your password!")
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.error(self.request, "Error updating your password!")
+        return super().form_invalid(form)
+
+
+class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'apps/auth/profile.html'

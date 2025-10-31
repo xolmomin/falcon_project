@@ -1,7 +1,8 @@
 from django.urls import path, re_path
 
 from apps.views import ProductListView, ProductDetailView, RegisterCreateView, LoginFormView, CustomLogoutView, \
-    ActivateAccountView, ShoppingCartListView, OrderCreateView, OrderListView, ProfileTemplateView
+    ActivateAccountView, ShoppingCartListView, OrderCreateView, OrderListView, ProfileTemplateView, \
+    ProfileChangePasswordFormView
 
 urlpatterns = [
     path('', ProductListView.as_view(), name='product_list_page'),
@@ -15,5 +16,6 @@ urlpatterns = [
             ActivateAccountView.as_view(), name='confirm_email_page'),
     path('auth/register', RegisterCreateView.as_view(), name='register_page'),
     path('profile', ProfileTemplateView.as_view(), name='profile_page'),
+    path('profile/change/password', ProfileChangePasswordFormView.as_view(), name='profile_change_password_page'),
 
 ]

@@ -1,8 +1,9 @@
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, update_session_auth_hash
 from django.contrib.auth.forms import UsernameField
 from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError
 from django.forms import Form, CharField, ModelForm, EmailField
+from django.forms.utils import ErrorList
 from django.utils.timezone import now
 
 from apps.models import User, Order
@@ -89,4 +90,36 @@ class OrderCreateForm(ModelForm):
             if len(_data['card_number']) != 16 or len(_data['exp_date']) != 4 or len(str(_data['cvv'])) != 3:
                 raise ValidationError("Information invalid")
 
+        return _data
+
+
+class ProfileChangePasswordModelForm(ModelForm):
+    old_password = CharField(max_length=128, required=True)
+    confirm_password = CharField(max_length=128, required=True)
+
+    class Meta:
+        model = User
+        fields = ['password']
+
+    def __init__(self, data=None, files=None, auto_id="id_%s", prefix=None, initial=None, error_class=ErrorList,
+                 label_suffix=None, empty_permitted=False, instance=None, use_required_attribute=None, renderer=None,
+                 request=None):
+        self.request = request
+        super().__init__(data, files, auto_id, prefix, initial, error_class, label_suffix, empty_permitted, instance,
+                         use_required_attribute, renderer)
+
+    def clean(self):
+        _data = super().clean()
+        user = self.request.user
+
+        old_password = _data.pop('old_password')
+        password = _data.get('password')
+        confirm_password = _data.pop('confirm_password')
+
+        if password != confirm_password or not user.check_password(old_password):
+            raise ValidationError("Passwords don't match")
+
+        user.set_password(password)
+        user.save(update_fields=['password'])
+        update_session_auth_hash(self.request, user)
         return _data
