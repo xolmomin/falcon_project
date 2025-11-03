@@ -8,6 +8,7 @@ class CreatedBaseModel(Model):
 
     class Meta:
         abstract = True
+        ordering = ('-created_at',)
 
 
 class SlugBaseModel(Model):

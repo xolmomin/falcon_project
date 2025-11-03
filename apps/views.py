@@ -1,9 +1,9 @@
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Q, Sum, F, Prefetch
+from django.db.models import Q, Sum, F, Prefetch, PositiveIntegerField
 from django.http import HttpResponseRedirect
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_decode
@@ -60,10 +60,33 @@ class ProductDetailView(DetailView):
     context_object_name = 'product'
 
 
-class OrderListView(ListView):
+class OrderListView(LoginRequiredMixin, ListView):
     queryset = Order.objects.all()
     template_name = 'apps/products/orders.html'
     context_object_name = 'orders'
+
+
+class OrderItemListView(LoginRequiredMixin, ListView):
+    queryset = OrderItem.objects.all()
+    template_name = 'apps/products/order-details.html'
+    context_object_name = 'order_items'
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        order_id = self.kwargs.get('pk')
+        self.order = get_object_or_404(Order, id=order_id)
+        return qs.filter(order=self.order).annotate(
+            amount=F('quantity') * (
+                        F('product__price') - F('product__discount_percentage') * F('product__price') / 100)
+        )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        qs = self.get_queryset()
+        context['shipping_cost'] = qs.aggregate(Sum('product__shipping_cost'))['product__shipping_cost__sum']
+        context['subtotal'] = qs.aggregate(total_sum=Sum(F('amount')))['total_sum']
+        context['order'] = self.order
+        return context
 
 
 class OrderCreateView(LoginRequiredMixin, CreateView):
