@@ -1,7 +1,10 @@
+import urllib.parse
+
+import requests
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Q, Sum, F, Prefetch, PositiveIntegerField
+from django.db.models import Q, Sum, F, Prefetch
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
@@ -15,6 +18,7 @@ from apps.mixins import LoginNotRequiredMixin
 from apps.models import Product, User, CartItem, ProductImage, Order, OrderItem
 from apps.tokens import account_activation_token
 from apps.utils import send_registration_link
+from root import settings
 
 
 class ActivateAccountView(View):
@@ -77,7 +81,7 @@ class OrderItemListView(LoginRequiredMixin, ListView):
         self.order = get_object_or_404(Order, id=order_id)
         return qs.filter(order=self.order).annotate(
             amount=F('quantity') * (
-                        F('product__price') - F('product__discount_percentage') * F('product__price') / 100)
+                    F('product__price') - F('product__discount_percentage') * F('product__price') / 100)
         )
 
     def get_context_data(self, **kwargs):
@@ -212,3 +216,49 @@ class ProfileChangePasswordFormView(LoginRequiredMixin, FormView):
 
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'apps/auth/profile.html'
+
+
+def google_login(request):
+    scope = "email profile"
+    auth_url = (
+        f"https://accounts.google.com/o/oauth2/auth?response_type=code"
+        f"&client_id={settings.GOOGLE_CLIENT_ID}"
+        f"&redirect_uri={urllib.parse.quote(settings.GOOGLE_REDIRECT_URI)}"
+        f"&scope={urllib.parse.quote(scope)}"
+    )
+    return redirect(auth_url)
+
+
+def google_callback(request):
+    code = request.GET.get("code")
+
+    token_data = {
+        "code": code,
+        "client_id": settings.GOOGLE_CLIENT_ID,
+        "client_secret": settings.GOOGLE_CLIENT_SECRET,
+        "redirect_uri": settings.GOOGLE_REDIRECT_URI,
+        "grant_type": "authorization_code",
+    }
+
+    token_res = requests.post("https://oauth2.googleapis.com/token", data=token_data).json()
+    access_token = token_res.get("access_token")
+
+    response = requests.get(
+        "https://www.googleapis.com/oauth2/v1/userinfo",
+        headers={"Authorization": f"Bearer {access_token}"}
+    )
+
+    if response.status_code == 200:
+        info = response.json()
+        email = info["email"]
+        name = info["name"]
+
+        user, created = User.objects.get_or_create(
+            username=info['id'],
+            email=email,
+            defaults={"first_name": name}
+        )
+        login(request, user)
+
+        return redirect('product_list_page')
+    response.raise_for_status()
